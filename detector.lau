@@ -1,0 +1,116 @@
+\documentclass{article}
+\usepackage{xltxtra, polyglossia, ecos}
+\setdefaultlanguage{english}
+\setmainfont{Cambria}
+\begin{document}
+\paper{Smart Occupancy Detector on Railroad Model Track}
+\author{Jan Horáček}{AŽD}
+\author{Jiří Rybička}{MENDELU}
+\abstract
+
+For the control of the model railway, simple section occupancy detectors were
+developed at Club of Railroad Modeller in Brno, whose technical and economic
+properties are as suitable as possible for use on extensive model railways and
+are a stable part of the entire complex of electronic components. However, the
+development shows that it is necessary to expand their capabilities and use
+other possibilities of the DCC control signal. It is a RailCom technology that
+allows information to be obtained from the vehicle's decoder, so the detector
+can obtain the address of a locomotive located at a certain point on the
+track. Although there are certain factory solutions, their technical
+parameters do not meet the requirements for the used control system of large
+railway yards and are relatively disadvantageous from an economic point of
+view. The subject of the paper is the description of the development of a
+custom intelligent occupancy detector with the ability to obtain the address
+of the vehicle decoder. This smart detector is also compatible with the
+electronics used to control the track in the laboratory.
+
+\endabstract
+
+\keyw{railroad model control, RailCom technology, occupancy detector, Digital
+Command Control, economic sustainability}
+
+\JEL{L920}
+
+\section{Introduction}
+
+Far from being a toy for children, the model railway in the Track Vehicle
+Control Laboratory is a complex computer-controlled electronic system.
+
+One of the main purposes of the track in the lab is to model traffic just like
+a real railroad and allow students to create simple programs to control it. At
+the same time, in addition to technical solutions, it is necessary to always
+follow economic aspects. Financial resources always have their limits and it
+is absolutely necessary to save with them, which is a necessary condition for
+the sustainability of the operation of the laboratory.
+
+Similar to the control of a real railway, it is also necessary to detect the
+presence of vehicles in a certain section of the track in model form. For this
+purpose, there are several different approaches and solutions, including
+commonly available factory products adapted to mostly simple tracks in
+domestic conditions serving mainly as children's toys. Large-scale railway
+yards, however, have to use somewhat different technologies, which differ
+mainly in terms of technical characteristics, but also in the price and
+availability of components.
+
+In some cases, more presence detection is insufficient. It is necessary to
+obtain some information from the vehicle present. However, this presents a
+major problem, since the vehicle control protocol (NMRA, 2012) is
+fundamentally designed as one-way. Nevertheless, there is a certain
+possibility of obtaining the necessary information, using RailCom technology
+(DCCWiki, 2024). The construction of a certain variant of such a smart
+occupancy detector is the subject of the article.
+
+\section{The state of the art}
+
+There are factory solutions for the possibility of obtaining the address of a
+vehicle standing on a certain track section.
+
+\subsection{Lenz Elektronik}
+
+Lenz Elektronik manufactures the LRC120 RailCom Display module, which is able
+to display the address of the vehicle decoder standing on the connected track
+section on the present four-digit display. The module is available from many
+vendors, for example AMB models (AMB modely, 2024).
+
+\subsection{Roco}
+
+One of the largest companies producing vehicles and equipment for model
+railways offers the Z21 10808 detector. The detector can be connected to Roco
+command stations. It offers detection and detection of a specific vehicle in
+the section, it also detects the presence of RailCom technology and allows
+various settings (Roco, 2024).
+
+\subsection{Digikeijs}
+
+The company Digikeijs, which offered a very widespread and popular command
+stations and other useful devices, recently announced the end of its
+activities.
+
+Digikeijs company offered module DR5088RC DigiDetect 16 channel RailCom feedback
+detector which have a 16 channel feedback module with occupancy detection and
+(per input) RailCom Channel 1 address reporting. The module also includes a
+global RailCom detector for each booster which this module is connected to, if
+needed this can be deactivated for command stations with built-in RailCom
+detection. All information from the DR5088RC is transported via the LocoNet
+bus, with firmware updates possible over a USB connection. This module is
+fully programmable over LNCV(?) or USB (Mark's Trains, 2024).
+
+\subsection{Další výrobci?}
+
+\subsection{Shrnutí výhod a nevýhod továrních produktů?}
+
+\section{Our solution}
+
+\section{References}
+
+\bibitem{AMB modely}{LE15120 LRC120 zobrazovací modul adresy RailCom}{[online]. [last access 2024-01-06]. Available at https://www.ambmodely.cz/le15120-lrc120-zobrazovaci-modul-adresy-railcom/d-8149}
+
+\bibitem{DCCWiki}{RailCom}{[online], [last access 2024-01-06]. Available at https://dccwiki.com/RailCom}
+
+\bibitem{NMRA}{Communications Standard for Digital Command Control Basic Decoder Transmission}{[online]. 2012. [last access 2024-01-06]. Available at https://www.nmra.org/sites/default/files/s-9.3.2_2012_12_10.pdf}
+
+\bibitem{Mark's Trains, Ltd.}{Digikeijs DR5088RC RailCom detector}{[online], [last access 2024-01-06]. Available at https://www.marks-trains.co.uk/shop/feedback-modules/digikeijs-dr5088rc-railcom-detector/}
+
+\bibitem{Roco}{Z21 detector}{[online], [last access 2024-01-06]. Available at https://www.z21.eu/en/products/z21-detector-railcom}
+
+\end{document}
