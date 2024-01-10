@@ -4,53 +4,66 @@
 \setmainfont{Cambria}
 \begin{document}
 \paper{Smart Occupancy Detector on Railroad Model Track}
-\author{Jan Horáček}{AŽD}
+\author{Jan Horáček}{MENDELU}
 \author{Jiří Rybička}{MENDELU}
 \abstract
 
-For the control of the model railway, simple section occupancy detectors were
-developed at Club of Railroad Modeller in Brno, whose technical and economic
-properties are as suitable as possible for use on extensive model railways and
-are a stable part of the entire complex of electronic components. However, the
-development shows that it is necessary to expand their capabilities and use
-other possibilities of the DCC control signal. It is a RailCom technology that
-allows information to be obtained from the vehicle's decoder, so the detector
-can obtain the address of a locomotive located at a certain point on the
-track. Although there are certain factory solutions, their technical
-parameters do not meet the requirements for the used control system of large
-railway yards and are relatively disadvantageous from an economic point of
-view. The subject of the paper is the description of the development of a
-custom intelligent occupancy detector with the ability to obtain the address
-of the vehicle decoder. This smart detector is also compatible with the
-electronics used to control the track in the laboratory.
+For a control of a model railway, simple track occupancy detectors are in use
+to detect presence and absence of a vehicle on the track. However, these detectors
+do not use a full potential of a digital command control (DCC) system.
+A RailCom technology allows information to be obtained from the vehicle's DCC decoder,
+so the detector can receive operationally important data from the rolling stock vehicle.
+Subject of the paper is the description of requirements and design of an
+own RailCom detector MTB-RC, which presents an alternative to the commercially-available
+products. MTB-RC is an open-source and open-hardware project, which is also
+compatible with the rest of a trackside hardware used in the Track Vehicle
+Control Laboratory FBE MENDELU. MTB-RC can read addresses of the DCC decoders
+present on the track and transmit it to the railway control software via MTBbus.
 
 \endabstract
 
-\keyw{railroad model control, RailCom technology, occupancy detector, Digital
-Command Control, economic sustainability}
+\keyw{railroad, model, interlocking, RailCom, occupancy detector, Digital
+Command Control, DCC, economic sustainability}
 
 \JEL{L920}
 
 \section{Introduction}
 
-Far from being a toy for children, the model railway in the Track Vehicle
-Control Laboratory is a complex computer-controlled electronic system.
+The model railway in the Track Vehicle Control Laboratory is a complex
+computer-controlled electronic system.
 
-One of the main purposes of the track in the lab is to model traffic just like
-a real railroad and allow students to create simple programs to control it. At
-the same time, in addition to technical solutions, it is necessary to always
-follow economic aspects. Financial resources always have their limits and it
-is absolutely necessary to save with them, which is a necessary condition for
-the sustainability of the operation of the laboratory.
+% One of the main purposes of the track in the lab is to model traffic just like
+% a real railroad and allow students to create simple programs to control it. At
+% the same time, in addition to technical solutions, it is necessary to always
+% follow economic aspects. Financial resources always have their limits and it
+% is absolutely necessary to save with them, which is a necessary condition for
+% the sustainability of the operation of the laboratory.
 
-Similar to the control of a real railway, it is also necessary to detect the
-presence of vehicles in a certain section of the track in model form. For this
-purpose, there are several different approaches and solutions, including
-commonly available factory products adapted to mostly simple tracks in
-domestic conditions serving mainly as children's toys. Large-scale railway
-yards, however, have to use somewhat different technologies, which differ
-mainly in terms of technical characteristics, but also in the price and
-availability of components.
+One of the key components required for the safe operation of a (model) railway
+is a track occupancy detector. This hardware detects presence of a vehicle
+-- an engine or a car -- in a section. The railway is then divided into multiple
+sections, each section is connected to one detector. A small model station with
+3 tracks can contain circa 10 sections.
+
+In the modl, the track occupancy detector basically detects whether the current flows
+through the rails - from one rail to another. In Digital Command Control (DCC) [TODO]
+system, each engine contains a small microcomputer which always draws current
+and each axle of a car contains an embedded resistor (15 kOhm) to draw the current as well.
+Thus any present vehicle in the model track draws current and this current in deteced
+by track occupancy detector as a voltage drop on a diode (other methods to detect current
+exist too).
+
+% Similar to the control of a real railway, it is also necessary to detect the
+% presence of vehicles in a certain section of the track in model form. For this
+% purpose, there are several different approaches and solutions, including
+% commonly available factory products adapted to mostly simple tracks in
+% domestic conditions serving mainly as children's toys. Large-scale railway
+% yards, however, have to use somewhat different technologies, which differ
+% mainly in terms of technical characteristics, but also in the price and
+% availability of components.
+
+In some situations, however, a different approach to the occupancy detection
+is beneficial. 
 
 In some cases, more presence detection is insufficient. It is necessary to
 obtain some information from the vehicle present. However, this presents a
