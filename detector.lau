@@ -244,6 +244,16 @@ The module is configurable over USB. \cite{yd6016ln-rc}.
 However, the module is not available now and its deployment would require
 further cabling to connect it to the command station.
 
+\subsection{RailComDisplay by F. M. Cañada}
+
+A well-known enthusiast for the DCC automation F. M. Cañada designed a RailCom
+module with display, which shows address of a DCC decoder similar to LRC120
+\cite{paco-railcom}.
+
+This module is local-only (without any bus), however the big advantage of the
+RailComDisplay is availability of schematics. The module is a source of useful
+inspiration.
+
 \subsection{Conclusion}
 
 Several commercial RailCom feedback modules exist, each has its own advantages
@@ -255,7 +265,16 @@ alternative to the existing commercial products.
 
 \section{MTB-RC}
 
+MTB-RC should support following features.
 
+\begin{enumerate}
+	\item Support for 8 track circuits. \\
+	This number is a good compromise between scalability and price.
+	\item Connection to the MTBbus \cite{mtbbus}. \\
+	MTBbus is currently used for stationary hardware control in Track Vehicle
+	Control Laboratory.
+	\item Opensource and openhardware design.
+\end{enumerate}
 
 \subsection{Multiple decoders detection problem}
 
