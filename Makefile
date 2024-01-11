@@ -2,7 +2,7 @@ NAME=detector
 
 all: $(NAME).pdf
 
-$(NAME).pdf: $(NAME).lau Makefile
+$(NAME).pdf: $(NAME).lau bibliography.bib Makefile
 	xelatex $<
 	biber $(basename $<).bcf
 	xelatex $<

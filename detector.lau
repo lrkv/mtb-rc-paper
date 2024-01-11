@@ -34,7 +34,12 @@ present on the track and transmit it to the railway control software via MTBbus.
 \section{Introduction}
 
 The model railway in the Track Vehicle Control Laboratory is a complex
-computer-controlled electronic system.
+computer-controlled electronic system. One of the key components required for
+the safe operation of a (model) railway is a track occupancy detector. This
+hardware detects presence of a vehicle -- an engine or a car -- in a section.
+The railway is then divided into multiple sections, each section is connected
+to one detector. A small model station with 3 tracks can contain circa 10
+sections.
 
 % One of the main purposes of the track in the lab is to model traffic just like
 % a real railroad and allow students to create simple programs to control it. At
@@ -43,17 +48,11 @@ computer-controlled electronic system.
 % is absolutely necessary to save with them, which is a necessary condition for
 % the sustainability of the operation of the laboratory.
 
-One of the key components required for the safe operation of a (model) railway
-is a track occupancy detector. This hardware detects presence of a vehicle
--- an engine or a car -- in a section. The railway is then divided into multiple
-sections, each section is connected to one detector. A small model station with
-3 tracks can contain circa 10 sections.
-
-In the modl, the track occupancy detector basically detects whether the current flows
-through the rails - from one rail to another. In Digital Command Control (DCC) [TODO]
+In the model, the track occupancy detector basically detects whether the current flows
+through the rails - from one rail to another. In Digital Command Control (DCC) \cite{dcc-wg}
 system, each engine contains a small microcomputer which always draws current
 and each axle of a car contains an embedded resistor (15 kOhm) to draw the current as well.
-Thus any present vehicle in the model track draws current and this current in deteced
+Thus any present vehicle in the model track draws current and this current in detected
 by track occupancy detector as a voltage drop on a diode (other methods to detect current
 exist too).
 
@@ -67,19 +66,65 @@ exist too).
 % availability of components.
 
 In some situations, however, a different approach to the occupancy detection
-is beneficial. 
+is beneficial. An extension of a DCC protocol called RailCom \cite{railcom-dccwiki}
+allows the information to be read from vehicle's decoder by the detector.
+The decoder must support RailCom protocol, but most of the decoders nowadays
+have a RailCom support implemented and even enabled by default \cite{???}.
+Also, the RailCom detector only reads information from the decoder, so cars
+are not detected by the detector. Thus, the RailCom detector cannot simply
+replace current-based detector mentioned in the previous article. The RailCom
+detector must be perceived as an extension to the current-based detector.
+A technology with different usages, different implementation, different price.
 
-In some cases, more presence detection is insufficient. It is necessary to
-obtain some information from the vehicle present. However, this presents a
-major problem, since the vehicle control protocol (NMRA, 2012) is
-fundamentally designed as one-way. Nevertheless, there is a certain
-possibility of obtaining the necessary information, using RailCom technology
-(DCCWiki, 2024). The construction of a certain variant of such a smart
-occupancy detector is the subject of the article.
+\section{DCC}
 
-\cite{railcom-dccwiki}
+The Digital Command Control (DCC) protocol was created in 1992 by
+National Model Railroad Association (NMRA) \cite{dcc-history}. The association
+in cooperation with companies producing model railroad hardware created a DCC
+Working group, which then released standards describing DCC from electrical and
+protocol point of view.
 
-\section{The state of the art}
+The DCC protocol was designed as a one-way protocol. The data flows from the
+\textit{Command Station} to the vehicles via tracks. The command station is
+controlled by throttles or computers, its main purpose is to generate the DCC
+signal. The signal goes via rails into the decoders of railway vehicles. The
+decoder is usually a small electronic module (e.g. 1×3 cm) with a powerful
+microcontroller which decoder DCC and controls the vehicle. Each decoder has its
+address, so different engines can be distinguished. The decoder controls mainly
+(1) motor, (2) lights, (3) sounds. Address of a decoder could be either
+\textit{basic} (1–127) or \textit{extended} (1–9999) \cite{dcc-addr}. On large
+layout, extended addresses are usually used, so we will focus mainly on this
+format, however compatibility with vehicles with basic address should be kept.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{data/dcc-packet.pdf}
+	\caption{A DCC packet \cite{nmra-s9.2}.}
+	\label{dcc-packet}
+\end{figure}
+
+DCC transmits data in packets via voltage between rails \cite{nmra-s9.2}. At
+each instant of a time, one rail compared to another has either positive or
+negative voltage. Length of pulses distinguishes logical 0 and 1. Each packet
+can contains different number of bytes. See figure \ref{dcc-packet}.
+
+The command station transmits packets one by another, cyclically addressing
+all decoders in wants to send commands to. It is important to send the data
+(e.g. speed command) cyclically, because the command station does not know
+whether the decoder received the command successfully. The decoder could
+be temporary busy, the engine could temporary loose electrical contact to rails etc.
+
+Detailed specification of a DCC protocol is available in \cite{nmra-s9.2}.
+
+\section{RailCom}
+
+In 2006, a NMRA standard \cite{nmra-railcom} describing an extension of a DCC
+protocol was release. The standard described so-called RailCom protocol, which
+allows the mobile decoders to transmit data back to the command station in normal
+operation mode.
+
+
+\section{State of the art}
 
 There are factory solutions for the possibility of obtaining the address of a
 vehicle standing on a certain track section.
