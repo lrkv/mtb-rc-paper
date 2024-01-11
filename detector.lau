@@ -156,6 +156,51 @@ From the data point of view, the RailCom transmission is a 250 kbis/s UART
 communication \cite{nmra-railcom}. This is large gap from DCC communication,
 which has an average speed of 6 kbit/s.
 
+The decoder transmits data in 2 channels. Channel 1 usually contains an address
+of a decoder transmitting the data, channel 2 contains response to a specific
+DCC commands requesting the decoder to respond (e.g. read configuration from the
+decoder or acknowledgement of a speed command).
+
+\section{Requirements}
+
+Based on the possibilities of a RailCom protocol, we infer usecases in which
+the protocol is beneficial and requirements for a solution.
+
+We will focus on the address-reading capability of RailCom. There are other
+important usages, e.g. the command station does not have to resend the data
+to the decoder cyclically, if the decoder confirmed (via RailCom) that it received
+the DCC packet correctly. However, the aim of this paper is to focus on
+a decoder-address-reading capability.
+
+Reading of a decoder's address is beneficial in situations, when the address
+is unknown. Usually, when train is in movement on a computer-controlled railroad
+like the one in Track Vehicle Control Laboratory, the software already knows
+its address, because it must have commanded it to move. We identifies following
+places, where RailCom technology is advantageous.
+
+\begin{enumerate}
+	\item Shunting in a train depot. \\
+	In the depot, engines are usually changed between rails fast and often.
+	They are even sometimes packed or unpacked by the owner. Moving the
+	responsibility to track vehicle's addresses from the operator to a
+	device seems to be beneficial.
+	\item Track for new engines. \\
+	There is usually a track or tracks at the model railroad specifically
+	designed for putting new vehicles on the track. The detector may automate
+	creating of a new train by automatically detecting engine's DCC address.
+	\item Handover track. \\
+	When part of the track is manager by other railroad control system, the
+	detector may be used on the entering track from foreign system to detect
+	incoming vehicle's DCC address.
+\end{enumerate}
+
+Based on the usecases, the detector should support several track circuits. The
+detector should be able to read decoder's address. If more vehicles are present
+(e.g. multitraction, multiple engines on a track in depot etc.) the detector
+should be able to read all of them. The detector should transmit detected
+addresses to the train control system. The detector should be financially
+available and ideally customizable and fixable/replaceable for long-time
+sustainability.
 
 \section{State of the art}
 
@@ -192,11 +237,13 @@ detection. All information from the DR5088RC is transported via the LocoNet
 bus, with firmware updates possible over a USB connection. This module is
 fully programmable over LNCV(?) or USB (Mark's Trains, 2024).
 
-\subsection{Další výrobci?}
+\subsection{Conclusion}
 
-\subsection{Shrnutí výhod a nevýhod továrních produktů?}
+\section{MTB-RC}
 
-\section{Our solution}
+\subsection{Multiple decoders detection problem}
+
+\section{Conclusion}
 
 \printbibliography
 
