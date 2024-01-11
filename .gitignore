@@ -4,4 +4,9 @@
 *.out
 *.log
 
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+
 detector.pdf

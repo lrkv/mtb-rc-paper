@@ -1,5 +1,7 @@
 \documentclass{article}
 \usepackage{xltxtra, polyglossia, url, hyperref}
+\usepackage[backend=biber]{biblatex}
+\addbibresource{bibliography.bib}
 % \usepackge{ecos}
 \setdefaultlanguage{english}
 % \setmainfont{Cambria}
@@ -75,6 +77,8 @@ possibility of obtaining the necessary information, using RailCom technology
 (DCCWiki, 2024). The construction of a certain variant of such a smart
 occupancy detector is the subject of the article.
 
+\cite{railcom-dccwiki}
+
 \section{The state of the art}
 
 There are factory solutions for the possibility of obtaining the address of a
@@ -116,20 +120,6 @@ fully programmable over LNCV(?) or USB (Mark's Trains, 2024).
 
 \section{Our solution}
 
-\section{References}
-
-\begin{thebibliography}{9}
-
-\bibitem{AMB modely}{LE15120 LRC120 zobrazovací modul adresy RailCom}{[online]. [last access 2024-01-06]. Available at https://www.ambmodely.cz/le15120-lrc120-zobrazovaci-modul-adresy-railcom/d-8149}
-
-\bibitem{DCCWiki}{RailCom}{[online], [last access 2024-01-06]. Available at https://dccwiki.com/RailCom}
-
-\bibitem{NMRA}{Communications Standard for Digital Command Control Basic Decoder Transmission}{[online]. 2012. [last access 2024-01-06]. Available at https://www.nmra.org/sites/default/files/s-9.3.2\_2012\_12\_10.pdf}
-
-\bibitem{Mark's Trains, Ltd.}{Digikeijs DR5088RC RailCom detector}{[online], [last access 2024-01-06]. Available at https://www.marks-trains.co.uk/shop/feedback-modules/digikeijs-dr5088rc-railcom-detector/}
-
-\bibitem{Roco}{Z21 detector}{[online], [last access 2024-01-06]. Available at https://www.z21.eu/en/products/z21-detector-railcom}
-
-\end{thebibliography}
+\printbibliography
 
 \end{document}

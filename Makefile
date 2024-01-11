@@ -1,12 +1,16 @@
-all: detector.pdf
+NAME=detector
 
-detector.pdf: detector.lau Makefile
-	xelatex detector.lau
+all: $(NAME).pdf
+
+$(NAME).pdf: $(NAME).lau Makefile
+	xelatex $<
+	biber $(basename $<).bcf
+	xelatex $<
 
 clean:
-	rm -r *.aux *.log
+	rm -f $(NAME).aux $(NAME).log $(NAME).out $(NAME).bbl $(NAME).bcf $(NAME).blg $(NAME).run.xml
 
 wipe:
-	rm -r detector.pdf
+	rm -r $(NAME).pdf
 
 .PHONY: all clean wipe
