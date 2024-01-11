@@ -204,42 +204,58 @@ sustainability.
 
 \section{State of the art}
 
-There are factory solutions for the possibility of obtaining the address of a
-vehicle standing on a certain track section.
+There are several industrial solutions for obtaining the address of a vehicle on
+the track.
 
-\subsection{Lenz Elektronik}
+\subsection{LRC120 by Lenz Elektronik}
 
-Lenz Elektronik manufactures the LRC120 RailCom Display module, which is able
-to display the address of the vehicle decoder standing on the connected track
-section on the present four-digit display. The module is available from many
-vendors, for example AMB models (AMB modely, 2024).
+Lenz Elektronik manufactures the \textit{LRC120} RailCom Display module. The
+module is able to display the address of the decoder in the connected track
+section on the four-digit display. The module is available from many vendors,
+for example AMB models \cite{lrc120}.
 
-\subsection{Roco}
+Main disadvantage of the module is absence of an interface for reporting the
+address further.
+
+\subsection{10808 detector by Roco}
 
 One of the largest companies producing vehicles and equipment for model
-railways offers the Z21 10808 detector. The detector can be connected to Roco
-command stations. It offers detection and detection of a specific vehicle in
-the section, it also detects the presence of RailCom technology and allows
-various settings (Roco, 2024).
+railways offers the \textit{Z21 10808 detector}. The detector can be connected
+to Roco Z21 command station using R-Bus or CAN. It supports 8 sections and allows
+various settings. To use RailCom, CAN bus must be used together with Roco Z21
+command station \cite{z21det}.
 
-\subsection{Digikeijs}
+From our points of view, disadvantage of this solution is a vendor-lock requiring
+use of the Roco command station. This would also require further cabling.
 
-The company Digikeijs, which offered a very widespread and popular command
-stations and other useful devices, recently announced the end of its
-activities.
+\subsection{YD6016LN-RC by YaMoRC (Digikeijs)}
 
-Digikeijs company offered module DR5088RC DigiDetect 16 channel RailCom feedback
-detector which have a 16 channel feedback module with occupancy detection and
-(per input) RailCom Channel 1 address reporting. The module also includes a
-global RailCom detector for each booster which this module is connected to, if
-needed this can be deactivated for command stations with built-in RailCom
-detection. All information from the DR5088RC is transported via the LocoNet
-bus, with firmware updates possible over a USB connection. This module is
-fully programmable over LNCV(?) or USB (Mark's Trains, 2024).
+The company Digikeijs, which offered a widespread and popular DCC hardware
+recently announced the end of its activities. The successor company is called
+YaMoRC, the products are similar.
+
+YaMoRC offers YD6016LN-RC RailCom track occupancy detector (similar to former
+Digikeijs DR5088RC) with 16 track sections. The detector supports per-track
+channel-1 address reporting and one global detector for reading other data
+from vehicles. All information from the DR5088RC is transported via the
+\textit{LocoNet} bus, with firmware updates possible over a USB connection.
+The module is configurable over USB. \cite{yd6016ln-rc}.
+
+However, the module is not available now and its deployment would require
+further cabling to connect it to the command station.
 
 \subsection{Conclusion}
 
+Several commercial RailCom feedback modules exist, each has its own advantages
+and disadvantages. For our requirements, we decided to design an own RailCom
+detector MTB-RC. The detector will be fully compatible with existing track
+hardware (no need to add more cabling), it will be fully customizable as the
+whole design is upon us. Moreover, we will provide an opensource and openhardware
+alternative to the existing commercial products.
+
 \section{MTB-RC}
+
+
 
 \subsection{Multiple decoders detection problem}
 
