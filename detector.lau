@@ -96,17 +96,20 @@ address, so different engines can be distinguished. The decoder controls mainly
 layout, extended addresses are usually used, so we will focus mainly on this
 format, however compatibility with vehicles with basic address should be kept.
 
+TODO: mention boosters
+
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.8\textwidth]{data/dcc-packet.pdf}
-	\caption{A DCC packet \cite{nmra-s9.2}.}
+	\caption{An example of a DCC packet \cite{nmra-s9.2}.}
 	\label{dcc-packet}
 \end{figure}
 
-DCC transmits data in packets via voltage between rails \cite{nmra-s9.2}. At
+DCC transmits data in packets using voltage between rails \cite{nmra-s9.2}. At
 each instant of a time, one rail compared to another has either positive or
-negative voltage. Length of pulses distinguishes logical 0 and 1. Each packet
-can contains different number of bytes. See figure \ref{dcc-packet}.
+negative voltage. Length of pulses distinguishes logical 0 (100 us pulse) and 1
+(58 us pulse). Each packet can contain different number of bytes. See figure
+\ref{dcc-packet}.
 
 The command station transmits packets one by another, cyclically addressing
 all decoders in wants to send commands to. It is important to send the data
@@ -119,9 +122,39 @@ Detailed specification of a DCC protocol is available in \cite{nmra-s9.2}.
 \section{RailCom}
 
 In 2006, a NMRA standard \cite{nmra-railcom} describing an extension of a DCC
-protocol was release. The standard described so-called RailCom protocol, which
-allows the mobile decoders to transmit data back to the command station in normal
-operation mode.
+protocol was released. The standard describes so-called RailCom protocol, which
+allows the mobile decoders to transmit data back to the command station while
+normally operational.
+
+The principle is as follows: in the space between DCC packets, the decoder
+transmits data. The decoder must contain a capacitor which gives it enough power
+to transmit data. An overview of components participating on a RailCom transmission
+is shown in figure \ref{decoder-transmission}.
+
+\begin{figure}[h]
+	% \includegraphics[width=0.8\textwidth]{data/railcom-components.pdf}
+	\caption{Components present in RailCom transmission.}
+	\label{decoder-transmission}
+\end{figure}
+
+The transmission in current-based. To transmit a “0”, the decoder must supply a
+current of 30+4/-6 mA with a voltage drop at the track of up to 2.2V. To
+transmit a “1”, the current must be at the most +/- 0.1mA \cite{nmra-railcom}.
+Compared to the voltage-based the design, the electrical design of a RailCom
+transmission is much more resistant to interference. However a special switch
+in the command station or a DCC booster is required. The switch just connects
+rails together, so the current loop is closed. There are command stations
+and boosters with and without RailCom support. This, railcom-supported booster or
+command station is required.
+
+The last part in \ref{decoder-transmission} is a \textit{detector}. The detector
+is a device, which reads data from decoder and is the topic of this paper. The
+detector senses current from the decoder and reads the data. Note there may be
+multiple detectors in the current loop, which is beneficial in some situations.
+
+From the data point of view, the RailCom transmission is a 250 kbis/s UART
+communication \cite{nmra-railcom}. This is large gap from DCC communication,
+which has an average speed of 6 kbit/s.
 
 
 \section{State of the art}
