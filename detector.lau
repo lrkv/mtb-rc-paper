@@ -36,45 +36,30 @@ present on the track and transmit it to the railway control software via MTBbus.
 
 The model railway in the Track Vehicle Control Laboratory is a complex
 computer-controlled electronic system. One of the key components required for
-the safe operation of a (model) railway is a track occupancy detector. This
-hardware detects presence of a vehicle -- an engine or a car -- in a section.
+the safe operation of a (model) railway is a track occupancy detector. The
+detector detects presence of a vehicle -- an engine or a car -- in a section.
 The railway is then divided into multiple sections, each section is connected
 to one detector. A small model station with 3 tracks can contain circa 10
 sections.
 
-% One of the main purposes of the track in the lab is to model traffic just like
-% a real railroad and allow students to create simple programs to control it. At
-% the same time, in addition to technical solutions, it is necessary to always
-% follow economic aspects. Financial resources always have their limits and it
-% is absolutely necessary to save with them, which is a necessary condition for
-% the sustainability of the operation of the laboratory.
-
 In the model, the track occupancy detector basically detects whether the current flows
-through the rails - from one rail to another. In Digital Command Control (DCC) \cite{dcc-wg}
-system, each engine contains a small microcomputer which always draws current
-and each axle of a car contains an embedded resistor (15 kOhm) to draw the current as well.
-Thus any present vehicle in the model track draws current and this current in detected
-by track occupancy detector as a voltage drop on a diode (other methods to detect current
-exist too).
-
-% Similar to the control of a real railway, it is also necessary to detect the
-% presence of vehicles in a certain section of the track in model form. For this
-% purpose, there are several different approaches and solutions, including
-% commonly available factory products adapted to mostly simple tracks in
-% domestic conditions serving mainly as children's toys. Large-scale railway
-% yards, however, have to use somewhat different technologies, which differ
-% mainly in terms of technical characteristics, but also in the price and
-% availability of components.
+through the rails -- from one rail to another. In Digital Command Control (DCC) \cite{dcc-wg}
+system, each engine contains a \textit{decoder} (a small electronic module)
+which draws some small current continuously. Each axle of a car contains an
+embedded resistor (15 kOhm) to draw the current as well.  Thus any present
+vehicle in the model track draws current and this current in detected by track
+occupancy detector as a voltage drop on a diode (other methods to detect
+current exist too).
 
 In some situations, however, a different approach to the occupancy detection
-is beneficial. An extension of a DCC protocol called RailCom \cite{railcom-dccwiki}
-allows the information to be read from vehicle's decoder by the detector.
-The decoder must support RailCom protocol, but most of the decoders nowadays
-have a RailCom support implemented and even enabled by default \cite{???}.
-Also, the RailCom detector only reads information from the decoder, so cars
+is beneficial. An extension of a DCC protocol called \textit{RailCom}
+allows the information to be read from vehicle's decoder by the detector \cite{railcom-dccwiki}.
+The decoder must support RailCom, but most of the decoders nowadays
+have the support implemented and even enabled by default.
+Also, the RailCom detector only reads information from the decoders, so cars
 are not detected by the detector. Thus, the RailCom detector cannot simply
-replace current-based detector mentioned in the previous article. The RailCom
-detector must be perceived as an extension to the current-based detector.
+replace current-based detector mentioned previously. The RailCom
+detector must be perceived as an extension to the current-based detection.
 A technology with different usages, different implementation, different price.
 
 \section{DCC}
@@ -85,19 +70,19 @@ in cooperation with companies producing model railroad hardware created a DCC
 Working group, which then released standards describing DCC from electrical and
 protocol point of view.
 
-The DCC protocol was designed as a one-way protocol. The data flows from the
-\textit{Command Station} to the vehicles via tracks. The command station is
-controlled by throttles or computers, its main purpose is to generate the DCC
-signal. The signal goes via rails into the decoders of railway vehicles. The
-decoder is usually a small electronic module (e.g. 1×3 cm) with a powerful
-microcontroller which decoder DCC and controls the vehicle. Each decoder has its
+The DCC was designed as a one-way protocol. The data flows from the
+\textit{command station} to the vehicle's decoders via tracks. The command station is
+controlled by throttles or computers. Main purpose of the command station is to generate DCC
+signal. The signal is sometimes amplified by a \textit{DCC booster}.
+The decoder is usually a small electronic module (e.g. 1×3 cm) with a powerful
+microcontroller which decodes DCC and controls the vehicle. Each decoder has its
 address, so different engines can be distinguished. The decoder controls mainly
-(1) motor, (2) lights, (3) sounds. Address of a decoder could be either
-\textit{basic} (1–127) or \textit{extended} (1–9999) \cite{dcc-addr}. On large
-layout, extended addresses are usually used, so we will focus mainly on this
-format, however compatibility with vehicles with basic address should be kept.
+(1) motor, (2) lights, (3) sounds.
 
-TODO: mention boosters
+% Address of a decoder could be either
+% \textit{basic} (1–127) or \textit{extended} (1–9999) \cite{dcc-addr}. On large
+% layout, extended addresses are usually used, so we will focus mainly on this
+% format, however compatibility with vehicles with basic address should be kept.
 
 \begin{figure}[h]
 	\centering
@@ -107,14 +92,14 @@ TODO: mention boosters
 \end{figure}
 
 DCC transmits data in packets using voltage between rails \cite{nmra-s9.2}.
-We call wires from command station or a booster to track lines "J" and "K".
+We call wires from command station or a booster to track lines \texttt{J} and \texttt{K}.
 At each instant of a time, one rail compared to another has either positive or
-negative voltage. Length of pulses distinguishes logical 0 (100 us pulse) and 1
-(58 us pulse). Each packet can contain different number of bytes. See figure
+negative voltage. Length of pulses distinguishes logical 0 (100~us pulse) and 1
+(58~us pulse). Each packet can contain different number of bytes. See figure
 \ref{dcc-packet}.
 
 The command station transmits packets one by another, cyclically addressing
-all decoders in wants to send commands to. It is important to send the data
+all decoders it wants to command. It is important to send the data
 (e.g. speed command) cyclically, because the command station does not know
 whether the decoder received the command successfully. The decoder could
 be temporary busy, the engine could temporary loose electrical contact to rails etc.
@@ -125,14 +110,15 @@ Detailed specification of a DCC protocol is available in \cite{nmra-s9.2}.
 \label{railcom}
 
 In 2006, a NMRA standard \cite{nmra-railcom} describing an extension of a DCC
-protocol was released. The standard describes so-called RailCom protocol, which
-allows the mobile decoders to transmit data back to the command station while
-normally operational.
+protocol was released. The standard describes so-called \textit{RailCom
+protocol}, which allows the mobile decoders to transmit data back to the
+command station while normally operational.
 
-The principle is as follows: in the space between DCC packets, the decoder
-transmits data. The decoder must contain a capacitor which gives it enough power
-to transmit data. An overview of components participating on a RailCom transmission
-is shown in figure \ref{decoder-transmission}.
+The principle is as follows: in the space between DCC packets (right of a
+figure \ref{dcc-packet}), the decoder transmits data. The decoder must contain
+a capacitor which gives it enough power for transmission. An overview of
+components participating in a RailCom transmission is shown in figure
+\ref{decoder-transmission}.
 
 \begin{figure}[h]
 	% \includegraphics[width=0.8\textwidth]{data/railcom-components.pdf}
@@ -140,37 +126,37 @@ is shown in figure \ref{decoder-transmission}.
 	\label{decoder-transmission}
 \end{figure}
 
-The transmission in current-based. To transmit a “0”, the decoder must supply a
-current of 30+4/-6 mA with a voltage drop at the track of up to 2.2V. To
-transmit a “1”, the current must be at the most +/- 0.1mA \cite{nmra-railcom}.
-Compared to the voltage-based the design, the electrical design of a RailCom
-transmission is much more resistant to interference. However a special switch
-in the command station or a DCC booster is required. The switch just connects
-rails together, so the current loop is closed. There are command stations
-and boosters with and without RailCom support. This, railcom-supported booster or
-command station is required.
+RailCom transmission in current-based. To transmit a \texttt{0}, the decoder must supply a
+current of $30+4/-6$~mA with a voltage drop at the track of up to $2.2$~V. To
+transmit a \texttt{1}, the current must be at the most $\pm 0.1$~mA \cite{nmra-railcom}.
+Compared to a voltage-based design, current-based transmission is much more
+resistant to interferences. However a special switch
+in the command station or a booster is required. The switch just connects
+output \texttt{J} and \texttt{K} wires together, so the current loop is closed.
+There are command stations and boosters with and without RailCom support. Thus,
+RailCom-supported booster or command station is required.
 
 The last part in \ref{decoder-transmission} is a \textit{detector}. The detector
-is a device, which reads data from decoder and is the topic of this paper. The
-detector senses current from the decoder and reads the data. Note there may be
-multiple detectors in the current loop, which is beneficial in some situations.
+is a device, which reads data from the decoder. The detector senses current
+generated by the decoder and reads the data. Note there may be multiple detectors in
+the current loop, which is beneficial in some situations.
 
-From the data point of view, the RailCom transmission is a 250 kbis/s UART
-communication \cite{nmra-railcom}. This is large gap from DCC communication,
-which has an average speed of 6 kbit/s.
+From the data point of view, RailCom transmission is a 250 kbis/s
+single-direction UART \cite{nmra-railcom}. This is large gap from DCC
+communication, which has an average speed of 6 kbit/s.
 
-The decoder transmits data in 2 channels. Channel 1 usually contains an address
-of a decoder transmitting the data, channel 2 contains response to a specific
-DCC commands requesting the decoder to respond (e.g. read configuration from the
-decoder or acknowledgement of a speed command).
+The decoder transmits data in 2 channels serially. Channel 1 usually contains an address
+of a decoder transmitting the data, channel 2 contains response to a
+DCC command requesting the decoder to respond (e.g. read configuration from the
+decoder or acknowledgement).
 
 \section{Requirements}
 
-Based on the possibilities of a RailCom protocol, we infer usecases in which
-the protocol is beneficial and requirements for a solution.
+Based on the possibilities of the RailCom, we infer usecases in which
+the protocol is beneficial and requirements for the solution.
 
-We will focus on the address-reading capability of RailCom. There are other
-important usages, e.g. the command station does not have to resend the data
+We will focus on a address-reading capability of RailCom. There are other
+important usages -- e.g. the command station does not have to resend data
 to the decoder cyclically, if the decoder confirmed (via RailCom) that it received
 the DCC packet correctly. However, the aim of this paper is to focus on
 a decoder-address-reading capability.
@@ -178,8 +164,8 @@ a decoder-address-reading capability.
 Reading of a decoder's address is beneficial in situations, when the address
 is unknown. Usually, when train is in movement on a computer-controlled railroad
 like the one in Track Vehicle Control Laboratory, the software already knows
-its address, because it must have commanded it to move. We identifies following
-places, where RailCom technology is advantageous.
+its address, because it must have commanded it to move. We identified following
+situations, in which RailCom technology is useful.
 
 \begin{enumerate}
 	\item Shunting in a train depot. \\
@@ -189,21 +175,20 @@ places, where RailCom technology is advantageous.
 	device seems to be beneficial.
 	\item Track for new engines. \\
 	There is usually a track or tracks at the model railroad specifically
-	designed for putting new vehicles on the track. The detector may automate
-	creating of a new train by automatically detecting engine's DCC address.
+	designed for mounting new vehicles. The detector may automate
+	creating of a new train by automatically detecting new engine's DCC address.
 	\item Handover track. \\
-	When part of the track is manager by other railroad control system, the
+	When part of the track is managed by an other railroad control system, the
 	detector may be used on the entering track from foreign system to detect
-	incoming vehicle's DCC address.
+	incoming vehicle's address.
 \end{enumerate}
 
 Based on the usecases, the detector should support several track circuits. The
 detector should be able to read decoder's address. If more vehicles are present
 (e.g. multitraction, multiple engines on a track in depot etc.) the detector
-should be able to read all of them. The detector should transmit detected
-addresses to the train control system. The detector should be financially
-available and ideally customizable and fixable/replaceable for long-time
-sustainability.
+should be able to read addresses of all of them. The detector should transmit detected
+addresses to the \textit{train control system}. The detector should be financially
+available, customizable and fixable/replaceable for long-time sustainability.
 
 \section{State of the art}
 
@@ -215,10 +200,10 @@ the track.
 Lenz Elektronik manufactures the \textit{LRC120} RailCom Display module. The
 module is able to display the address of the decoder in the connected track
 section on the four-digit display. The module is available from many vendors,
-for example AMB models \cite{lrc120}.
+for example AMB Models \cite{lrc120}.
 
 Main disadvantage of the module is absence of an interface for reporting the
-address further.
+address.
 
 \subsection{10808 detector by Roco}
 
@@ -229,7 +214,7 @@ various settings. To use RailCom, CAN bus must be used together with Roco Z21
 command station \cite{z21det}.
 
 From our points of view, disadvantage of this solution is a vendor-lock requiring
-use of the Roco command station. This would also require further cabling.
+use of the Roco command station. Deployment would also require to add cabling.
 
 \subsection{YD6016LN-RC by YaMoRC (Digikeijs)}
 
@@ -240,12 +225,12 @@ YaMoRC, the products are similar.
 YaMoRC offers YD6016LN-RC RailCom track occupancy detector (similar to former
 Digikeijs DR5088RC) with 16 track sections. The detector supports per-track
 channel-1 address reporting and one global detector for reading other data
-from vehicles. All information from the DR5088RC is transported via the
+from vehicles. All information from the YD6016LN-RC is transported via the
 \textit{LocoNet} bus, with firmware updates possible over a USB connection.
 The module is configurable over USB. \cite{yd6016ln-rc}.
 
 However, the module is not available now and its deployment would require
-further cabling to connect it to the command station.
+additional cabling to connect it to the command station.
 
 \subsection{RailComDisplay by F. M. Cañada}
 
@@ -261,7 +246,7 @@ inspiration.
 
 Several commercial RailCom feedback modules exist, each has its own advantages
 and disadvantages. For our requirements, we decided to design an own RailCom
-detector MTB-RC. The detector will be fully compatible with existing track
+detector \textit{MTB-RC}. The detector will be compatible with existing track
 hardware (no need to add more cabling), it will be fully customizable as the
 whole design is upon us. Moreover, we will provide an opensource and openhardware
 alternative to the existing commercial products.
@@ -273,7 +258,7 @@ MTB-RC should support following features.
 \begin{enumerate}
 	\item Support for 8 track circuits. \\
 	This number is a good compromise between scalability and price.
-	\item Connection to the MTBbus \cite{mtbbus}. \\
+	\item Connection to the MTBbus \cite{mtb}. \\
 	MTBbus is currently used for stationary hardware control in Track Vehicle
 	Control Laboratory.
 	\item Opensource and openhardware design.
@@ -281,9 +266,9 @@ MTB-RC should support following features.
 
 \subsection{Principles of design}
 
-Now we describe important principles of design of an own MTB-RC RailCom detector.
+Now we describe important principles of design of the MTB-RC RailCom detector.
 
-The detector shall be connected to MTBbus and DCC. These two parts are
+The detector shall be connected to the MTBbus and DCC. These two buses are
 generally galvanic separated, so the design should be composed of two
 top-level galvanic separated parts.
 
@@ -292,13 +277,13 @@ top-level galvanic separated parts.
 	\item MTB part.
 \end{enumerate}
 
-The module must contain a microcontroller (MCU) to process the data. It is not desired
+The detector must contain a microcontroller (MCU) to process the data. It is not desired
 for the MCU to be powered-off when DCC to the track is disconnected
 (e.g. because of short-circuit on the track). So the MCU must lay in the MTB
 part powered from MTBbus power supply.
 
-MTB part of the module shall contain standard MTB-module components like
-e.g. MTB-UNI module \cite{}.
+MTB part of the detector shall contain standard MTB-module components like on
+e.g. MTB-UNI module \cite{mtb}.
 
 \begin{itemize}[noitemsep]
 	\item Jumpers to select address
@@ -307,19 +292,20 @@ e.g. MTB-UNI module \cite{}.
 	\item Button
 \end{itemize}
 
-An important decision is how the data shall be transfered from DCC part to MTB
-part (and vice versa if required). The answer the question, we need to understand
-how a RailCom detector works in general.
+An important question is how the data shall be transferred from the DCC part to the MTB
+part (and vice versa if required). To answer the question we need to understand
+how the RailCom detection works in general.
 
 \subsection{RailCom detection principle}
 
 The RailCom detection principle is described in \cite{nmra-railcom} in detail.
 Here, we briefly describe key principles.
 
-As we discussed in \ref{railcom}, one of wires from command station the track
-is simply cut and both ends are connected to the detector. Let's assume "K"
-wire is cut. A figure \ref{detection-principle} shows, how these two ends are
-connected inside the detector.
+As we discussed in \ref{railcom}, one of the \texttt{J} and \texttt{K} wires from
+the command station (or the booster) to the track is simply cut and both ends
+are connected to the detector. Let's assume "K" wire is cut. A figure
+\ref{detection-principle} shows how these two ends are connected inside the
+detector.
 
 \begin{figure}[h]
 	\centering
@@ -328,11 +314,11 @@ connected inside the detector.
 	\label{detection-principle}
 \end{figure}
 
-Current flow causes a voltage drop on R1, which is then measured. In addition,
+Current flow causes a voltage drop $U_{KIN-KOUT}$ on R1, which is then measured. In addition,
 protective Schottky diodes D1 and D2 are added to avoid high temperature of
-R1 while maximum continuous current 3A flows. The detector must use adequate
-parts and adequate resistor size to dissipate the heat. Schottky diodes are used,
-so the maximum voltage between KIN and KOUT is never more than cca 0.5~V.
+R1 while maximum continuous current of $3$~A flows. The detector must use adequate
+parts and adequate resistor size to dissipate the heat. Schottky diodes are used
+so the maximum voltage between \texttt{KIN} and \texttt{KOUT} is never more than cca $0.5$~V.
 
 The voltage $U_{KIN-KOUT}$ is then compared using \textit{window comparator}
 circuit. See figure \ref{window-comparator}.
@@ -344,57 +330,60 @@ circuit. See figure \ref{window-comparator}.
 	\label{window-comparator}
 \end{figure}
 
-The comparator is powered from e.g. -5V -- +5V related to KIN potential. Voltage
+The comparators are powered from e.g. -5V -- +5V with $0 =$~\texttt{KIN}. Voltage
 references $\pm 18.5\ mV$ are defined in \cite{nmra-railcom}.
 
-Comparators have open-collector output. If $U_{KIN-KOUT} \in (-18.5 mV, +18.5 mV)$,
+The comparators have an open-collector output. If $U_{KIN-KOUT} \in (-18.5 mV, +18.5 mV)$,
 (logical 0 of RailCom), \texttt{DATA} is connected to -5V, otherwise (logical 1
 of RailCom), \texttt{DATA} is in high-impedance state. Output data are directly
 in UART format readable by MCU.
 
-MTB-RC must contain 8 instances of circuits present in figures
+MTB-RC must contain 8 instances of circuits presented in figures
 \ref{detection-principle} and \ref{window-comparator} to support 8 separate
 track circuits.
 
 \subsection{MTB-DCC interface}
 
 As small MCUs with 8 separate UARTs basically do not exist, we suggest to use
-some kind of multiplexing. We suggest to use STM32F103 ARM Cortex-M3 MCU, because
-of its availability, relatively low price, powerful core and advanced peripherals.
-STM32F103 has 3 UARTs, out of which 1 must be used for MTBbus communication.
-Remaining two shall be used for RailCom reading. This implies 4-way multiplexing.
-This solution is not ideal, as some data are always lost by design, but the loss
-should not break address detection principle.
+multiplexing. We suggest to use STM32F103 ARM Cortex-M3 MCU, because
+of its availability, relatively low price, powerful core and advanced peripherals \cite{stm32f103-datasheet}.
+STM32F103 has 3 UARTs, out of which one must be used for MTBbus communication.
+Remaining two UARTs shall be used for RailCom reading. This implies 4-way multiplexing.
+The proposed solution is not ideal, as some data are always lost by design, but the loss
+should not break address detection.
 
 The multiplexer shall be present in DCC part. This implies no MCU in DCC part
 is required. Interface between DCC part and MTB part shall consist of:
 
 \begin{itemize}[noitemsep]
-	\item 2 UARTs (DCC $rightarrow$ MTB)
-	\item 2 multiplexer-control wires (MTB $rightarrow$ DCC)
-	\item DCC signal (DCC $rightarrow$ MTB)
-	\item Cutout signal (DCC $rightarrow$ MTB)
+	\item 2 UARTs (DCC $\rightarrow$ MTB)
+	\item 2 multiplexer-control wires (MTB $\rightarrow$ DCC)
+	\item DCC signal (DCC $\rightarrow$ MTB)
+	\item Cutout signal (DCC $\rightarrow$ MTB)
 \end{itemize}
 
 \textit{Cutout signal} is to inform MCU that RailCom cutout occurred, so the
 MCU starts reading RailCom data (UARTs). \textit{DCC signal} is transmitted so
-the processor can read the DCC from command station, so it knows to which commands
-the decoders answer.
+the processor can read the DCC from the command station, so it knows to which
+command the decoder answers.
 
 \subsection{Multiple decoders detection problem}
 
 One of the key problems of RailCom detection is multiple decoders in a section.
 As discussed in \ref{railcom}, each decoder sends its own address in channel 1,
-which results in unreadable data.
+which results in unreadable data when multiple decoders are present in a single
+track section.
 
-The idea of multiple address detection is to read DCC from command station and
+The idea of multiple address detection is to read DCC from the command station and
 check for channel 2. If the command stations sends any command to a decoder present
 in the track, the decoder (and only the decoder!) responds in channel 2. This
-allows to detect present decoders, even there is more of them on the track.
+allows to detect decoders, even there is more of them on the track.
 Necessary condition is the decoder being addressed by the command station.
 This issue must be solved separately and is out of scope of this paper.
 
 \section{Conclusion}
+
+We described the design... TODO
 
 \printbibliography
 
