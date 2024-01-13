@@ -1,5 +1,6 @@
 \documentclass{article}
-\usepackage{xltxtra, polyglossia, url, hyperref}
+\usepackage[a4paper]{geometry}
+\usepackage{xltxtra, polyglossia, url, hyperref, enumitem}
 \usepackage[backend=biber]{biblatex}
 \addbibresource{bibliography.bib}
 % \usepackge{ecos}
@@ -105,8 +106,9 @@ TODO: mention boosters
 	\label{dcc-packet}
 \end{figure}
 
-DCC transmits data in packets using voltage between rails \cite{nmra-s9.2}. At
-each instant of a time, one rail compared to another has either positive or
+DCC transmits data in packets using voltage between rails \cite{nmra-s9.2}.
+We call wires from command station or a booster to track lines "J" and "K".
+At each instant of a time, one rail compared to another has either positive or
 negative voltage. Length of pulses distinguishes logical 0 (100 us pulse) and 1
 (58 us pulse). Each packet can contain different number of bytes. See figure
 \ref{dcc-packet}.
@@ -120,6 +122,7 @@ be temporary busy, the engine could temporary loose electrical contact to rails 
 Detailed specification of a DCC protocol is available in \cite{nmra-s9.2}.
 
 \section{RailCom}
+\label{railcom}
 
 In 2006, a NMRA standard \cite{nmra-railcom} describing an extension of a DCC
 protocol was released. The standard describes so-called RailCom protocol, which
@@ -276,7 +279,120 @@ MTB-RC should support following features.
 	\item Opensource and openhardware design.
 \end{enumerate}
 
+\subsection{Principles of design}
+
+Now we describe important principles of design of an own MTB-RC RailCom detector.
+
+The detector shall be connected to MTBbus and DCC. These two parts are
+generally galvanic separated, so the design should be composed of two
+top-level galvanic separated parts.
+
+\begin{enumerate}[noitemsep]
+	\item DCC part,
+	\item MTB part.
+\end{enumerate}
+
+The module must contain a microcontroller (MCU) to process the data. It is not desired
+for the MCU to be powered-off when DCC to the track is disconnected
+(e.g. because of short-circuit on the track). So the MCU must lay in the MTB
+part powered from MTBbus power supply.
+
+MTB part of the module shall contain standard MTB-module components like
+e.g. MTB-UNI module \cite{}.
+
+\begin{itemize}[noitemsep]
+	\item Jumpers to select address
+	\item Indication LEDs
+	\item RS485 driver (an integrated circuit)
+	\item Button
+\end{itemize}
+
+An important decision is how the data shall be transfered from DCC part to MTB
+part (and vice versa if required). The answer the question, we need to understand
+how a RailCom detector works in general.
+
+\subsection{RailCom detection principle}
+
+The RailCom detection principle is described in \cite{nmra-railcom} in detail.
+Here, we briefly describe key principles.
+
+As we discussed in \ref{railcom}, one of wires from command station the track
+is simply cut and both ends are connected to the detector. Let's assume "K"
+wire is cut. A figure \ref{detection-principle} shows, how these two ends are
+connected inside the detector.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.3\textwidth]{data/detection.pdf}
+	\caption{RailCom current detection principle.}
+	\label{detection-principle}
+\end{figure}
+
+Current flow causes a voltage drop on R1, which is then measured. In addition,
+protective Schottky diodes D1 and D2 are added to avoid high temperature of
+R1 while maximum continuous current 3A flows. The detector must use adequate
+parts and adequate resistor size to dissipate the heat. Schottky diodes are used,
+so the maximum voltage between KIN and KOUT is never more than cca 0.5~V.
+
+The voltage $U_{KIN-KOUT}$ is then compared using \textit{window comparator}
+circuit. See figure \ref{window-comparator}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{data/comparators.pdf}
+	\caption{A Window comparator circuit.}
+	\label{window-comparator}
+\end{figure}
+
+The comparator is powered from e.g. -5V -- +5V related to KIN potential. Voltage
+references $\pm 18.5\ mV$ are defined in \cite{nmra-railcom}.
+
+Comparators have open-collector output. If $U_{KIN-KOUT} \in (-18.5 mV, +18.5 mV)$,
+(logical 0 of RailCom), \texttt{DATA} is connected to -5V, otherwise (logical 1
+of RailCom), \texttt{DATA} is in high-impedance state. Output data are directly
+in UART format readable by MCU.
+
+MTB-RC must contain 8 instances of circuits present in figures
+\ref{detection-principle} and \ref{window-comparator} to support 8 separate
+track circuits.
+
+\subsection{MTB-DCC interface}
+
+As small MCUs with 8 separate UARTs basically do not exist, we suggest to use
+some kind of multiplexing. We suggest to use STM32F103 ARM Cortex-M3 MCU, because
+of its availability, relatively low price, powerful core and advanced peripherals.
+STM32F103 has 3 UARTs, out of which 1 must be used for MTBbus communication.
+Remaining two shall be used for RailCom reading. This implies 4-way multiplexing.
+This solution is not ideal, as some data are always lost by design, but the loss
+should not break address detection principle.
+
+The multiplexer shall be present in DCC part. This implies no MCU in DCC part
+is required. Interface between DCC part and MTB part shall consist of:
+
+\begin{itemize}[noitemsep]
+	\item 2 UARTs (DCC $rightarrow$ MTB)
+	\item 2 multiplexer-control wires (MTB $rightarrow$ DCC)
+	\item DCC signal (DCC $rightarrow$ MTB)
+	\item Cutout signal (DCC $rightarrow$ MTB)
+\end{itemize}
+
+\textit{Cutout signal} is to inform MCU that RailCom cutout occurred, so the
+MCU starts reading RailCom data (UARTs). \textit{DCC signal} is transmitted so
+the processor can read the DCC from command station, so it knows to which commands
+the decoders answer.
+
 \subsection{Multiple decoders detection problem}
+
+One of the key problems of RailCom detection is multiple decoders in a section.
+As discussed in \ref{railcom}, each decoder sends its own address in channel 1,
+which results in unreadable data.
+
+The idea of multiple address detection is to read DCC from command station and
+check for channel 2. If the command stations sends any command to a decoder present
+in the track, the decoder (and only the decoder!) responds in channel 2. This
+allows to detect present decoders, even there is more of them on the track.
+Necessary condition is the decoder being addressed by the command station.
+This issue must be solved separately and is out of scope of this paper.
 
 \section{Conclusion}
 
