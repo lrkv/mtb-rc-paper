@@ -114,11 +114,11 @@ protocol was released. The standard describes so-called \textit{RailCom
 protocol}, which allows the mobile decoders to transmit data back to the
 command station while normally operational.
 
-The principle is as follows: in the space between DCC packets (right of a
-figure \ref{dcc-packet}), the decoder transmits data. The decoder must contain
-a capacitor which gives it enough power for transmission. An overview of
-components participating in a RailCom transmission is shown in figure
-\ref{decoder-transmission}.
+The principle is as follows: in the space between DCC packets (right side of a
+figure \ref{dcc-packet}), the decoder transmits data. The space is called a \textit{cutout}.
+The decoder must contain a capacitor which gives it enough power for
+transmission. An overview of components participating in a RailCom transmission
+is shown in figure \ref{decoder-transmission}.
 
 \begin{figure}[h]
 	% \includegraphics[width=0.8\textwidth]{data/railcom-components.pdf}
@@ -326,7 +326,7 @@ circuit. See figure \ref{window-comparator}.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.5\textwidth]{data/comparators.pdf}
-	\caption{A Window comparator circuit.}
+	\caption{A window comparator circuit.}
 	\label{window-comparator}
 \end{figure}
 
@@ -362,7 +362,7 @@ is required. The interface between the DCC part and the MTB part shall consist o
 	\item Cutout signal (DCC $\rightarrow$ MTB)
 \end{itemize}
 
-\textit{Cutout signal} is to inform MCU that RailCom cutout occurred, so the
+\textit{Cutout signal} is used to inform MCU that RailCom cutout occurred, so the
 MCU starts reading RailCom data (UARTs). \textit{DCC signal} is transmitted so
 the processor can read the DCC from the command station, so it knows to which
 command the decoder answers.
@@ -380,6 +380,14 @@ in the track, the decoder (and only the decoder!) responds in channel 2. This
 allows us to detect decoders, even if there are more of them on the track.
 A necessary condition is the decoder being addressed by the command station.
 This issue must be solved separately and is out of the scope of this paper.
+
+\subsection{Solution}
+
+Based on the requirements and design principles defined above, the MTB-RC module
+was designed. Schematic and PCB design created in an open software KiCad are
+available online\footnote{\url{https://github.com/kmzbrnoI/mtb-rc}}. The PCB
+was manufactured and is now undergoing tests of functionality. Firmware is to
+be written.
 
 \section{Conclusion}
 
