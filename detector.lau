@@ -391,7 +391,21 @@ be written.
 
 \section{Conclusion}
 
-We described the design... TODO
+The new detector, the design of which has been described, makes it possible to
+use additional functionalities in operation on the track. One of the functions
+that we expect to make operations more efficient is the automation of
+deploying another vehicle in a designated section (most often a locomotive
+depot). This avoids time loss when changing drive vehicles and errors when
+entering the wrong address from the control computer keyboard. By putting the
+detector into operation and implementing the RailCom principle, it will be
+possible to use these parts in the following development in the design of a
+more reliable and efficient control system equipped with the ability to verify
+commands for driving vehicles.
+
+\section*{Acknowledgements}
+This paper was supported by the project CZ.02.1.01/0.0/0.0/16\_017/0002334
+Research Infrastructure for Young Scientists, this is co-financed from
+Operational Programme Research, Development and Education.
 
 \printbibliography
 
