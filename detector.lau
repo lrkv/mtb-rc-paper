@@ -121,7 +121,7 @@ is shown in figure \ref{decoder-transmission}.
 \end{figure}
 
 RailCom transmission is current-based. To transmit a \texttt{0}, the decoder must supply a
-current of $30+4/-6$~mA with a voltage drop at the track of up to $2.2$~V. To
+current of $30+4/{-}6$~mA with a voltage drop at the track of up to $2.2$~V. To
 transmit a \texttt{1}, the current must be at the most $\pm 0.1$~mA \cite{nmra-railcom}.
 Compared to a voltage-based design, current-based transmission is much more
 resistant to interferences. However, a special switch
@@ -308,13 +308,13 @@ detector.
 	\label{detection-principle}
 \end{figure}
 
-The current flow causes a voltage drop $U_{KIN-KOUT}$ on R1, which is then measured. In addition,
+The current flow causes a voltage drop $U_{\mathrm{KIN–KOUT}}$ on R1, which is then measured. In addition,
 protective Schottky diodes D1 and D2 are added to avoid high temperatures of
 R1 while the maximum continuous current of $3$~A flows. The detector must use adequate
 parts and adequate resistor size to dissipate the heat. Schottky diodes are used
 so the maximum voltage between \texttt{KIN} and \texttt{KOUT} is never more than cca $0.5$~V.
 
-The voltage $U_{KIN-KOUT}$ is then compared using \textit{window comparator}
+The voltage $U_{\mathrm{KIN-KOUT}}$ is then compared using \textit{window comparator}
 circuit. See figure \ref{window-comparator}.
 
 \begin{figure}[h]
@@ -324,11 +324,12 @@ circuit. See figure \ref{window-comparator}.
 	\label{window-comparator}
 \end{figure}
 
-The comparators are powered from e.g. -5V -- +5V with $0 =$~\texttt{KIN}. Voltage
-references $\pm 18.5\ mV$ are defined in \cite{nmra-railcom}.
+The comparators are powered from e.g. $-5$~V to $+5$~V with $0 =$~\texttt{KIN}. Voltage
+references $\pm 18.5$~mV are defined in \cite{nmra-railcom}.
 
-The comparators have an open-collector output. If $U_{KIN-KOUT} \in (-18.5 mV, +18.5 mV)$,
-(logical 0 of RailCom), \texttt{DATA} is connected to -5V, otherwise (logical 1
+The comparators have an open-collector output. If
+$U_{\mathrm{KIN-KOUT}} \in (-18.5, +18.5)$~mV,
+(logical 0 of RailCom), \texttt{DATA} is connected to $-$5 V, otherwise (logical 1
 of RailCom), \texttt{DATA} is in high-impedance state. Output data are directly
 in UART format readable by MCU.
 
