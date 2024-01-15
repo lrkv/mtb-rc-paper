@@ -78,7 +78,7 @@ address, so different engines can be distinguished. The decoder controls mainly
 % layout, extended addresses are usually used, so we will focus mainly on this
 % format however compatibility with vehicles with basic addresses should be kept.
 
-\begin{figure}[h]
+\begin{figure}[htb]
 	\centering
 	\includegraphics[width=0.8\textwidth]{data/dcc-packet.pdf}
 	\caption{An example of a DCC packet \cite{nmra-s9.2}.}
@@ -114,7 +114,8 @@ The decoder must contain a capacitor which gives it enough power for
 transmission. An overview of components participating in a RailCom transmission
 is shown in figure \ref{decoder-transmission}.
 
-\begin{figure}[h]
+\begin{figure}[htb]
+	\centering
 	\includegraphics[width=0.8\textwidth]{data/railcom-components.pdf}
 	\caption{Components present in RailCom transmission.}
 	\label{decoder-transmission}
@@ -301,7 +302,7 @@ are connected to the detector. Let's assume the \texttt{K} wire is cut. A figure
 \ref{detection-principle} shows how these two ends are connected inside the
 detector.
 
-\begin{figure}[h]
+\begin{figure}[htb]
 	\centering
 	\includegraphics[width=0.3\textwidth]{data/detection.pdf}
 	\caption{RailCom current detection principle.}
@@ -317,7 +318,7 @@ so the maximum voltage between \texttt{KIN} and \texttt{KOUT} is never more than
 The voltage $U_{\mathrm{KIN-KOUT}}$ is then compared using \textit{window comparator}
 circuit. See figure \ref{window-comparator}.
 
-\begin{figure}[h]
+\begin{figure}[htb]
 	\centering
 	\includegraphics[width=0.5\textwidth]{data/comparators.pdf}
 	\caption{A window comparator circuit.}
