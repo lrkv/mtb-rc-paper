@@ -1,0 +1,30 @@
+\usepackage[a4paper]{geometry}
+\usepackage{xltxtra, polyglossia, url, enumitem}
+\usepackage[backend=biber]{biblatex}
+\addbibresource{bibliography.bib}
+\setdefaultlanguage{english}
+%\setmainfont{Cambria} % Do not use Microsoft-licensed font
+\setmainfont{Caladea}
+
+\textwidth=16cm
+\textheight=24cm
+
+\def\paper#1{\newpage\begin{center}\large
+26th International Scientific Conference\\
+“Economic Competitiveness and Sustainability”,\\
+March 21–22, 2024, Brno, Czech Republic\par\vskip 5mm
+\Huge#1\par\vskip 5mm\large}
+
+\newsavebox{\afiliace}
+\def\afil#1{\sbox{\afiliace}{\parbox{\textwidth}{\small\usebox{\afiliace}{}\\[3pt] $^{\thenumauthor}$\,#1}}}
+\newcounter{numauthor}
+\def\author#1#2{\stepcounter{numauthor}\ifnum\value{numauthor}=1\else , \fi#1$^{\thenumauthor}$\afil{#2}\ignorespaces}
+
+\def\abstract{\par\smallskip\usebox{\afiliace}\normalsize\subsubsection*{Abstract}\end{center}\begingroup\small\parindent 0pt}
+
+\def\endabstract{\endgroup}
+
+\def\keyw#1{\par\bigskip\noindent Keywords: #1}
+
+\def\JEL#1{\par\bigskip\noindent JEL Code: #1\par\bigskip}
+

@@ -1,8 +1,9 @@
 NAME=detector
+DATA=$(wildcard data/*)
 
 all: $(NAME).pdf
 
-$(NAME).pdf: $(NAME).lau bibliography.bib Makefile
+$(NAME).pdf: $(NAME).lau bibliography.bib Makefile $(DATA) ecos.sty
 	xelatex $<
 	biber $(basename $<).bcf
 	xelatex $<

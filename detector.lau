@@ -1,16 +1,10 @@
-\documentclass{article}
-\usepackage[a4paper]{geometry}
-\usepackage{xltxtra, polyglossia, url, hyperref, enumitem}
-\usepackage[backend=biber]{biblatex}
-\addbibresource{bibliography.bib}
-% \usepackge{ecos}
-\setdefaultlanguage{english}
-% \setmainfont{Cambria}
-
+\documentclass[12pt]{article}
+\usepackage{ecos}
 \begin{document}
-% \paper{Smart Occupancy Detector on Railroad Model Track}
-\author{Jan Horáček}{MENDELU}
-\author{Jiří Rybička}{MENDELU}
+\paper{Smart Occupancy Detector on Railroad Model Track}
+\author{Jan Horáček}{Provozně ekonomická fakulta MENDELU, Zemědělská 1, 613 00 Brno}
+\author{Jiří Rybička}{Ústav informatiky, Provozně ekonomická fakulta MENDELU, Zemědělská 1, 613 00 Brno}
+
 \abstract
 
 For control of a model railway, simple track occupancy detectors are in use
@@ -24,13 +18,12 @@ products. MTB-RC is an open-source and open-hardware project, which is also
 compatible with the rest of the trackside hardware used in the Track Vehicle
 Control Laboratory FBE MENDELU. MTB-RC can read the addresses of the DCC decoders
 present on the track and transmit them to the railway control software via MTBbus.
-
 \endabstract
 
-% \keyw{railroad, model, interlocking, RailCom, occupancy detector, Digital
-% Command Control, DCC, economic sustainability}
+\keyw{railroad, model, interlocking, RailCom, occupancy detector, Digital
+Command Control, DCC, economic sustainability}
 
-% \JEL{L920}
+\JEL{L920}
 
 \section{Introduction}
 
