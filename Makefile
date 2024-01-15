@@ -6,7 +6,7 @@ all: $(NAME).pdf
 $(NAME).pdf: $(NAME).lau bibliography.bib Makefile $(DATA) ecos.sty
 	xelatex $<
 	biber $(basename $<).bcf
-	xelatex $<
+	texfot xelatex $<
 
 clean:
 	rm -f $(NAME).aux $(NAME).log $(NAME).out $(NAME).bbl $(NAME).bcf $(NAME).blg $(NAME).run.xml
