@@ -1,5 +1,6 @@
 \documentclass[12pt]{article}
 \usepackage{ecos}
+\usepackage{hyperref}
 \begin{document}
 \paper{Smart Occupancy Detector for Model Railroad}
 \author{Jan Horáček}{Provozně ekonomická fakulta MENDELU, Zemědělská 1, 613 00 Brno}
