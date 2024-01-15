@@ -121,7 +121,7 @@ transmission. An overview of components participating in a RailCom transmission
 is shown in figure \ref{decoder-transmission}.
 
 \begin{figure}[h]
-	% \includegraphics[width=0.8\textwidth]{data/railcom-components.pdf}
+	\includegraphics[width=0.8\textwidth]{data/railcom-components.pdf}
 	\caption{Components present in RailCom transmission.}
 	\label{decoder-transmission}
 \end{figure}
