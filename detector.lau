@@ -12,8 +12,8 @@ For control of a model railway, simple track occupancy detectors are in use
 to detect the presence and absence of a vehicle on the track. However, these detectors
 do not use the full potential of a digital command control (DCC) system.
 A RailCom technology allows information to be obtained from the vehicle's DCC decoder,
-so the detector can receive operationally important data from the rolling stock vehicle.
-The subject of the paper is the description of requirements and design of an
+thus the detector can receive operationally important data from the rolling stock vehicle.
+The subject of the paper is the description of requirements and design of our
 own RailCom detector MTB-RC, which presents an alternative to commercially available
 products. MTB-RC is an open-source and open-hardware project, which is also
 compatible with the rest of the trackside hardware used in the Track Vehicle
