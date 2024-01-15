@@ -117,7 +117,7 @@ is shown in figure \ref{decoder-transmission}.
 \begin{figure}[htb]
 	\centering
 	\includegraphics[width=0.8\textwidth]{data/railcom-components.pdf}
-	\caption{Components present in RailCom transmission.}
+	\caption{Components participating in a RailCom transmission.}
 	\label{decoder-transmission}
 \end{figure}
 
@@ -387,18 +387,20 @@ be written.
 
 \section{Conclusion}
 
-The new detector, the design of which has been described, makes it possible to
-use additional functionalities in operation on the track. One of the functions
-that we expect to make operations more efficient is the automation of
-deploying another vehicle in a designated section (most often a locomotive
-depot). This avoids time loss when changing drive vehicles and errors when
-entering the wrong address from the control computer keyboard. By putting the
-detector into operation and implementing the RailCom principle, it will be
-possible to use these parts in the following development in the design of a
-more reliable and efficient control system equipped with the ability to verify
-commands for driving vehicles.
+The design of a new MTB-RC RailCom detector has been described, the module has been
+manufactured.
 
-\section*{Acknowledgements}
+The detector makes it possible to use additional functionalities of the track
+operation.  One of the functions that we expect to make operations more
+efficient is the automation of deploying another vehicle in a designated
+section (most often a locomotive depot). This minimizes the time spent on engine
+changing and avoids errors caused by entering the wrong address by an operator.
+
+Putting the RailCom detector in operation is the first step to a more reliable
+and efficient track control system equipped with the ability to read
+acknowledgments of DCC commands sent to vehicles.
+
+\section*{Acknowledgments}
 This paper was supported by the project CZ.02.1.01/0.0/0.0/16\_017/0002334
 Research Infrastructure for Young Scientists, this is co-financed from
 Operational Programme Research, Development and Education.
