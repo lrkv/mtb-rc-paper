@@ -1,7 +1,7 @@
 \documentclass[12pt]{article}
 \usepackage{ecos}
 \begin{document}
-\paper{Smart Occupancy Detector on Railroad Model Track}
+\paper{Smart Occupancy Detector for Model Railroad}
 \author{Jan Horáček}{Provozně ekonomická fakulta MENDELU, Zemědělská 1, 613 00 Brno}
 \author{Jiří Rybička}{Ústav informatiky, Provozně ekonomická fakulta MENDELU, Zemědělská 1, 613 00 Brno}
 
