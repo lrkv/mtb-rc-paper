@@ -385,6 +385,14 @@ available online\footnote{\url{https://github.com/kmzbrnoI/mtb-rc}}. The PCB
 was manufactured and is now undergoing tests of functionality. Firmware is to
 be written.
 
+\begin{figure}[htb]
+	\centering
+	\includegraphics[height=5.3cm]{data/mtb-rc-top.png}
+	\includegraphics[height=5.3cm]{data/mtb-rc-bot.png}
+	\caption{MTB-RC PCB}
+	\label{dcc-packet}
+\end{figure}
+
 \section{Conclusion}
 
 The design of a new MTB-RC RailCom detector has been described, the module has been
