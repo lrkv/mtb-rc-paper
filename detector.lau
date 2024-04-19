@@ -110,7 +110,7 @@ command station while normally operational.
 
 The principle is as follows: in the space between DCC packets (right side of a
 figure \ref{dcc-packet}), the decoder transmits data. The space is called a \textit{cutout}.
-The decoder must contain a capacitor which gives it enough power for
+The decoder contains a capacitor which gives it enough power for
 transmission. An overview of components participating in a RailCom transmission
 is shown in figure \ref{decoder-transmission}.
 
@@ -248,7 +248,9 @@ alternative to the existing commercial products.
 
 \section{MTB-RC}
 
-MTB-RC should support the following features.
+An own MTB-RC module was designed. Schematic and PCB design were created in an
+open software KiCad and are available online\footnote{\url{https://github.com/kmzbrnoI/mtb-rc}}.
+MTB-RC supports the following features.
 
 \begin{enumerate}
 	\item Support for 8 track circuits. \\
@@ -263,21 +265,21 @@ MTB-RC should support the following features.
 
 Now we describe important principles of design of the MTB-RC RailCom detector.
 
-The detector shall be connected to the MTBbus and DCC. These two buses are
-generally galvanic separated, so the design should be composed of two
-top-level galvanic separated parts.
+The detector is connected to the MTBbus and DCC. These two buses are generally
+galvanic separated, so the design is composed of two top-level galvanic
+separated parts.
 
 \begin{enumerate}[noitemsep]
 	\item DCC part,
 	\item MTB part.
 \end{enumerate}
 
-The detector must contain a microcontroller (MCU) to process the data. It is not desired
+The detector contains a microcontroller (MCU) to process the data. It is not desired
 for the MCU to be powered off when the DCC to the track is disconnected
-(e.g. because of a short-circuit on the track). So the MCU must lay in the MTB
+(e.g. because of a short-circuit on the track). So the MCU lays in the MTB
 part powered by MTBbus power supply.
 
-The MTB part of the detector shall contain standard MTB module components like on
+The MTB part of the detector contains standard MTB module components like on
 e.g. MTB-UNI module \cite{mtb}.
 
 \begin{itemize}[noitemsep]
@@ -311,7 +313,7 @@ detector.
 
 The current flow causes a voltage drop $U_{\mathrm{KIN–KOUT}}$ on R1, which is then measured. In addition,
 protective Schottky diodes D1 and D2 are added to avoid high temperatures of
-R1 while the maximum continuous current of $3$~A flows. The detector must use adequate
+R1 while the maximum continuous current of $3$~A flows. The detector uses adequate
 parts and adequate resistor size to dissipate the heat. Schottky diodes are used
 so the maximum voltage between \texttt{KIN} and \texttt{KOUT} is never more than cca $0.5$~V.
 
@@ -334,22 +336,22 @@ $U_{\mathrm{KIN-KOUT}} \in (-18.5, +18.5)$~mV,
 of RailCom), \texttt{DATA} is in high-impedance state. Output data are directly
 in UART format readable by MCU.
 
-MTB-RC must contain 8 instances of circuits presented in figures
+MTB-RC contains 8 instances of circuits presented in figures
 \ref{detection-principle} and \ref{window-comparator} to support 8 separate
 track circuits.
 
 \subsection{MTB-DCC interface}
 
-As small MCUs with 8 separate UARTs basically do not exist, we suggest using
-multiplexing. We suggest using STM32F103 ARM Cortex-M3 MCU, because
+As small MCUs with 8 separate UARTs basically do not exist, multiplexing is used.
+STM32F103 ARM Cortex-M3 MCU was selected as a main MCU, because
 of its availability, relatively low price, powerful core, and advanced peripherals \cite{stm32f103-datasheet}.
 STM32F103 has 3 UARTs, out of which one must be used for MTBbus communication.
 The remaining two UARTs shall be used for RailCom reading. This implies 4-way multiplexing.
 The proposed solution is not ideal, as some data are always lost by design, but the loss
 should not break address detection.
 
-The multiplexer shall be present in the DCC part. This implies no MCU in the DCC part
-is required. The interface between the DCC part and the MTB part shall consist of:
+The multiplexer is present in the DCC part. This implies no MCU in the DCC part
+is required. The interface between the DCC part and the MTB part consists of:
 
 \begin{itemize}[noitemsep]
 	\item 2 UARTs (DCC $\rightarrow$ MTB)
@@ -359,7 +361,7 @@ is required. The interface between the DCC part and the MTB part shall consist o
 \end{itemize}
 
 \textit{Cutout signal} is used to inform MCU that RailCom cutout occurred, so the
-MCU starts reading RailCom data (UARTs). \textit{DCC signal} is transmitted so
+MCU starts reading RailCom data (via UARTs). \textit{DCC signal} is transmitted so
 the processor can read the DCC from the command station, so it knows to which
 command the decoder answers.
 
@@ -371,19 +373,19 @@ which results in unreadable data when multiple decoders are present in a single
 track section.
 
 The idea of multiple address detection is to read DCC from the command station and
-check for channel 2. If the command station sends any command to a decoder present
+check for RailCom data in channel 2. If the command station sends any command to a decoder present
 in the track, the decoder (and only the decoder!) responds in channel 2. This
 allows us to detect decoders, even if there are more of them on the track.
 A necessary condition is the decoder being addressed by the command station.
 This issue must be solved separately and is out of the scope of this paper.
 
-\subsection{Solution}
+\subsection{Firmware}
 
-Based on the requirements and design principles defined above, the MTB-RC module
-was designed. Schematic and PCB design created in an open software KiCad are
-available online\footnote{\url{https://github.com/kmzbrnoI/mtb-rc}}. The PCB
-was manufactured and is now undergoing tests of functionality. Firmware is to
-be written.
+The firmware for STM32F103 MCU is written in C language and is available online
+\footnote{\url{https://github.com/kmzbrnoI/mtb-rc}}. STM32 HAL library was used.
+The firmware consists of RailCom decoding, DCC decoding and MTB communication.
+
+\section{Conclusion}
 
 \begin{figure}[htb]
 	\centering
@@ -393,10 +395,8 @@ be written.
 	\label{dcc-packet}
 \end{figure}
 
-\section{Conclusion}
-
 The design of a new MTB-RC RailCom detector has been described, the module has been
-manufactured.
+manufactured, firmware was written and the module passed basic laboratory tests.
 
 The detector makes it possible to use additional functionalities of the track
 operation.  One of the functions that we expect to make operations more
