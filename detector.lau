@@ -306,7 +306,7 @@ detector.
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=0.3\textwidth]{data/detection.pdf}
+	\includegraphics[width=0.25\textwidth]{data/detection.pdf}
 	\caption{RailCom current detection principle.}
 	\label{detection-principle}
 \end{figure}
@@ -322,7 +322,7 @@ circuit. See figure \ref{window-comparator}.
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=0.5\textwidth]{data/comparators.pdf}
+	\includegraphics[width=0.45\textwidth]{data/comparators.pdf}
 	\caption{A window comparator circuit.}
 	\label{window-comparator}
 \end{figure}
@@ -381,8 +381,8 @@ This issue must be solved separately and is out of the scope of this paper.
 
 \subsection{Firmware}
 
-The firmware for STM32F103 MCU is written in C language and is available online
-\footnote{\url{https://github.com/kmzbrnoI/mtb-rc}}. STM32 HAL library was used.
+The firmware for STM32F103 MCU is written in C language and is available
+online\footnote{\url{https://github.com/kmzbrnoI/mtb-rc}}. STM32 HAL library was used.
 The firmware consists of RailCom decoding, DCC decoding, and MTB communication.
 
 \section{Conclusion}
