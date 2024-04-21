@@ -197,7 +197,7 @@ module can display the address of the decoder in the connected track
 section on the four-digit display. The module is available from many vendors,
 for example, AMB Models \cite{lrc120}.
 
-The main disadvantage of the module is an absence of an interface for reporting the
+The main disadvantage of the module is the absence of an interface for reporting the
 address.
 
 \subsection{10808 detector by Roco}
@@ -239,7 +239,7 @@ inspiration.
 
 \subsection{Conclusion}
 
-Several commercial RailCom feedback modules exist, each has its advantages
+Several commercial RailCom feedback modules exist, and each has its advantages
 and disadvantages. For our requirements, we decided to design our own RailCom
 detector \textit{MTB-RC}. The detector will be compatible with existing track
 hardware (no need to add more cabling), and it will be fully customizable as the
@@ -383,7 +383,7 @@ This issue must be solved separately and is out of the scope of this paper.
 
 The firmware for STM32F103 MCU is written in C language and is available online
 \footnote{\url{https://github.com/kmzbrnoI/mtb-rc}}. STM32 HAL library was used.
-The firmware consists of RailCom decoding, DCC decoding and MTB communication.
+The firmware consists of RailCom decoding, DCC decoding, and MTB communication.
 
 \section{Conclusion}
 
