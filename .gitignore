@@ -1,12 +1,2 @@
-*.swp
-*.aux
-*.log
-*.out
-*.log
-
-*.bbl
-*.bcf
-*.blg
-*.run.xml
-
+aux
 detector.pdf

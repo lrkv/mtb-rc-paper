@@ -1,17 +1,16 @@
 NAME=detector
 DATA=$(wildcard data/*)
+AUXDIR=aux
 
 all: $(NAME).pdf
 
 $(NAME).pdf: $(NAME).lau bibliography.bib Makefile $(DATA) ecos.sty
-	xelatex $<
-	biber $(basename $<).bcf
-	texfot xelatex $<
+	latexmk -pdfxe -auxdir=$(AUXDIR) $<
 
 clean:
-	rm -f $(NAME).aux $(NAME).log $(NAME).out $(NAME).bbl $(NAME).bcf $(NAME).blg $(NAME).run.xml
+	rm -rf $(AUXDIR)
 
-wipe:
+wipe: clean
 	rm -r $(NAME).pdf
 
 .PHONY: all clean wipe
