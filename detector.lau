@@ -240,11 +240,31 @@ inspiration.
 \subsection{Conclusion}
 
 Several commercial RailCom feedback modules exist, and each has its advantages
-and disadvantages. For our requirements, we decided to design our own RailCom
+and disadvantages. Overall features are summarized in a table \ref{sa-comparison}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{ |l|c|l|r| }
+ \hline
+ Detector & N.o. tracks & Buses & Price \\
+ \hline
+ LRC120 \cite{lrc120} & 1 & N/A & 1482 CZK \\
+ Roco 10808 \cite{z21det} & 8 & R-Bus, CAN & \cite{z21itvlaky} 2980 CZK \\
+ YD6016LN-RC \cite{yd6016ln-rc} & 16 & LocoNet & 3200 CZK \\
+ RailComDisplay \cite{paco-railcom} & 1 & N/A & DYI \\
+ \hline
+\end{tabular}
+\caption{Comparison of commercially-available RailCom detectors.}
+\label{sa-comparison}
+\end{table}
+
+For our requirements, we decided to design our own RailCom
 detector \textit{MTB-RC}. The detector will be compatible with existing track
 hardware (no need to add more cabling), and it will be fully customizable as the
 whole design is upon us. Moreover, we will provide an open-source and open-hardware
 alternative to the existing commercial products.
+
+
 
 \section{MTB-RC}
 
@@ -381,7 +401,7 @@ This issue must be solved separately and is out of the scope of this paper.
 
 \subsection{Firmware}
 
-The firmware for STM32F103 MCU is written in C language and is available
+The firmware for STM32F103 MCU is implemented in C language and is available
 online\footnote{\url{https://github.com/kmzbrnoI/mtb-rc}}. STM32 HAL library was used.
 The firmware consists of RailCom decoding, DCC decoding, and MTB communication.
 
@@ -394,8 +414,24 @@ The firmware consists of RailCom decoding, DCC decoding, and MTB communication.
 	\caption{MTB-RC PCB}
 \end{figure}
 
-The design of a new MTB-RC RailCom detector has been described, the module has been
-manufactured, firmware was written and the module passed basic laboratory tests.
+Design of the MTB-RC RailCom detector has been described, the module has been
+manufactured, firmware was implemented and the module passed basic laboratory tests.
+
+Overall parameters of the MTB-RC are summarized in a table \ref{mtbrc-features}.
+Compare the table to the table \ref{sa-comparison}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{ |l|c|l|r| }
+ \hline
+ Detector & N.o. tracks & Buses & Price \\
+ \hline
+ MTB-RC & 8 & MTBbus & $\sim$ 600 CZK \\
+ \hline
+\end{tabular}
+\caption{Overall features of MTB-RC.}
+\label{mtbrc-features}
+\end{table}
 
 The detector makes it possible to use additional functionalities of the track
 operation.  One of the functions that we expect to make operations more
