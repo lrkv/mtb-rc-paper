@@ -13,9 +13,9 @@ to detect the presence and absence of a vehicle on the track. However, these det
 do not use the full potential of a digital command control (DCC) system.
 A RailCom technology allows information to be obtained from the vehicle's DCC decoder,
 thus the detector can receive operationally important data from the rolling stock vehicle.
-The subject of the paper is the description of requirements and design of our
+The subject of the paper is the description of requirements and design of an
 own RailCom detector MTB-RC, which presents an alternative to commercially available
-products. MTB-RC is an open-source and open-hardware project, which is also
+model railway RailCom detectors. MTB-RC is an open-source and open-hardware project, which is also
 compatible with the rest of the trackside hardware used in the Track Vehicle
 Control Laboratory FBE MENDELU. MTB-RC can read the addresses of the DCC decoders
 present on the track and transmit them to the railway control software via MTBbus.
